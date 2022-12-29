@@ -1,0 +1,24 @@
+class Game{
+    
+    field Board gameBoard;
+    field Array pieces;
+    
+    constructor Game new(){
+
+    }
+
+    method void dispose() {
+      do gameBoard.dispose();
+      while{}
+      do Memory.deAlloc(this);
+      return;
+    }
+
+    method void run(){
+
+    }
+
+    method void init(){
+        
+    }
+}

@@ -1,0 +1,45 @@
+class GamePiece {
+    var RADIUS = 15; // Constant Size of one piece
+    field int x, y; // Coordinates of the piece on screen
+    field boolean color; // True if the piece is black and False if white
+
+    /** Constructs a new GamePiece with the given coordinates and color */
+    constructor GamePiece new(int Ax, int Ay, boolean Acolor){
+        let x = Ax;
+        let y = Ay;
+        let color = Acolor;
+        do draw();
+        return this;
+    }
+
+    /** Moves the piece one column right (if possible) */
+    method void moveRight(){
+        //TODO: Implement
+    }
+
+    /** Moves the piece one column left (if possible) */
+    method void moveLeft(){
+        //TODO: Implement
+    }
+
+    /** Drops the piece to the board */
+    method void drop(int height){
+
+    }
+
+    /** Draws the piece on the screen */
+    method void draw(){
+
+    }
+
+    /** Erases the piece from the screen */
+    method void erase(){
+
+    }
+
+    /** Disposes this piece */
+    method void dispose(){
+
+    }
+
+}

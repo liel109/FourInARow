@@ -1,0 +1,43 @@
+class Board{
+
+    field Array board; // 7x7 matrix representing the game board
+
+    /** Consructs a new Board instance
+        initializes the 7x7 matrix with 0 in every cell*/
+    constructor Board new(){
+
+    }
+
+    /** Updates the given cell according to the active given player.
+        Checks if the updated cell has met the conditions for winning the game.
+        
+        Returns:
+            TRUE if the game was won, FALSE otherwise
+    */
+    method boolean updateCell(int row, int col, int player){
+
+    }
+
+    /** Checks if the winning conditions are met and returns true if so 
+        
+        Returns:
+            TRUE if the game was won, FALSE otherwise
+    */
+    method boolean gameWon(){
+
+    }
+
+    /** Returns the Lowest Row that could store a game piece in the given column.
+
+        Returns:
+            the Lowest Row that could store a game piece in the given column
+    */
+    method int getLowestEmptyCell(int column){
+
+    }
+
+    /** Disposes this Board Instance */
+    method void dispose(){
+
+    }
+}
