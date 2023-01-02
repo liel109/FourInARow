@@ -67,6 +67,7 @@ class GamePiece {
 
     /** Disposes this piece */
     method void dispose(){
+        do Memory.deAlloc(this);
         return;
     }
 
