@@ -4,21 +4,21 @@ class Game{
     field Array pieces;
     
     constructor Game new(){
-
+      return this;
     }
 
     method void dispose() {
       do gameBoard.dispose();
-      while{}
+      //while{}
       do Memory.deAlloc(this);
       return;
     }
 
     method void run(){
-
+      return;
     }
 
     method void init(){
-        
+        return;
     }
 }

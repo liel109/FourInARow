@@ -1,5 +1,7 @@
 class GamePiece {
-    var RADIUS = 15; // Constant Size of one piece
+
+    field int RADIUS; // Constant Size of one piece
+    field int DX; // Constant Length of one row
     field int x, y; // Coordinates of the piece on screen
     field boolean color; // True if the piece is black and False if white
 
@@ -7,6 +9,8 @@ class GamePiece {
     constructor GamePiece new(int Ax, int Ay, boolean Acolor){
         let x = Ax;
         let y = Ay;
+        let RADIUS = 15;
+        let DX = 50;
         let color = Acolor;
         do draw();
         return this;
@@ -14,32 +18,56 @@ class GamePiece {
 
     /** Moves the piece one column right (if possible) */
     method void moveRight(){
-        //TODO: Implement
+        if((x + DX) < 257) {
+            do erase();
+            let x = x + DX;
+            do draw();
+        }
+        return;
     }
 
     /** Moves the piece one column left (if possible) */
     method void moveLeft(){
-        //TODO: Implement
+        if((x - DX) > 0) {
+            do erase();
+            let x = x - DX;
+            do draw();
+        }
+        return;
     }
 
     /** Drops the piece to the board */
     method void drop(int height){
-
+        while( y < height ){
+            do Sys.wait(50);
+            do erase();
+            let y = y + 2;
+            do draw();
+        }
+        return;
     }
 
     /** Draws the piece on the screen */
     method void draw(){
-
+        do Screen.setColor(true);
+        do Screen.drawCircle(x, y, RADIUS);
+        if(~color){
+            do Screen.setColor(false);
+            do Screen.drawCircle(x, y, RADIUS-2);
+        }
+        return;
     }
 
     /** Erases the piece from the screen */
     method void erase(){
-
+        do Screen.setColor(false);
+        do Screen.drawCircle(x, y, RADIUS);
+        return;
     }
 
     /** Disposes this piece */
     method void dispose(){
-
+        return;
     }
 
 }
