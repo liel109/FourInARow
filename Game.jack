@@ -57,7 +57,7 @@ class Game{
             let piece = GamePiece.new(INIT_PIECE_X,INIT_PIECE_Y,turn);
             let pieces[pieceCount] = piece;
             let pieceCount = pieceCount + 1;
-            let column = 4;
+            let column = 3;
             let dropped = false;
             while(~dropped){
                 while(key = 0){
@@ -89,10 +89,15 @@ class Game{
 
         // winner declaration
         do Output.moveCursor(1,26);
-        if(turn){
-            let winningTitle = "Player 2 Won!";
+        if(pieceCount = 49){
+            let winningTitle = "It's a tie!";
         }
-        else { let winningTitle = "Player 1 Won!";}
+        else {
+            if(turn){
+                let winningTitle = "Player 2 Won!";
+            }
+            else { let winningTitle = "Player 1 Won!";}
+        }
         do Output.printString(winningTitle);
         return;
     }
