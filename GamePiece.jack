@@ -9,37 +9,39 @@ class GamePiece {
     constructor GamePiece new(int Ax, int Ay, boolean Acolor){
         let x = Ax;
         let y = Ay;
-        let RADIUS = 15;
-        let DX = 50;
+        let RADIUS = 13;
+        let DX = 54;
         let color = Acolor;
         do draw();
         return this;
     }
 
     /** Moves the piece one column right (if possible) */
-    method void moveRight(){
-        if((x + DX) < 257) {
+    method boolean moveRight(){
+        if((x + DX) < 433) {
             do erase();
             let x = x + DX;
             do draw();
+            return true;
         }
-        return;
+        return false;
     }
 
     /** Moves the piece one column left (if possible) */
-    method void moveLeft(){
-        if((x - DX) > 0) {
+    method boolean moveLeft(){
+        if((x - DX) > 79) {
             do erase();
             let x = x - DX;
             do draw();
+            return true;
         }
-        return;
+        return false;
     }
 
     /** Drops the piece to the board */
     method void drop(int height){
         while( y < height ){
-            do Sys.wait(50);
+            do Sys.wait(10);
             do erase();
             let y = y + 2;
             do draw();

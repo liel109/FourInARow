@@ -1,10 +1,27 @@
 class Board{
 
-    field Array board; // 7x7 matrix representing the game board
+    field int size; 
+    field Array board; // sizeXsize matrix representing the game board
 
     /** Consructs a new Board instance
-        initializes the 7x7 matrix with 0 in every cell*/
-    constructor Board new(){
+        initializes the sizeXsize matrix with 0 in every cell*/
+    constructor Board new(int boardSize){
+        var int counterX, counterY;
+        var Array xGrid;
+
+        let size = boardSize;
+        let board = Array.new(size);
+        let counterX = 0;
+        while(counterX < size){
+            let xGrid = Array.new(size);
+            let counterY = 0;
+            while(counterY < size){
+                let xGrid[counterY] = 0;
+                let counterY = counterY + 1;
+            }
+            let board[counterX] = xGrid;
+            let counterX = counterX + 1;
+        }
         return this;
     }
 
@@ -14,8 +31,14 @@ class Board{
         Returns:
             TRUE if the game was won, FALSE otherwise
     */
-    method boolean updateCell(int row, int col, int player){
-        return true;
+    method boolean updateCell(int row, int col, boolean player){
+        if(player){
+            do setValue(row, col, 1);
+        }
+        else {
+            do setValue(row, col, 2);
+        }
+        return gameWon(row,col);
     }
 
     /** Checks if the winning conditions are met and returns true if so 
@@ -23,21 +46,171 @@ class Board{
         Returns:
             TRUE if the game was won, FALSE otherwise
     */
-    method boolean gameWon(){
-        return true;
+    method boolean gameWon(int row, int col){
+        var Array dxArray, dyArray;
+        var int i, dir1, dir2;
+
+        let dxArray = getDxArray();
+        let dyArray = getDyArray();
+        let i = 0;
+
+        while(i < 4){
+            let dir1 = getStraight(row,col,dxArray[i], dyArray[i]);
+            let dir2 = getStraight(row,col, -1 * dxArray[i] , -1 * dyArray[i]);
+            if(dir1 + dir2 > 4) {
+                return true;
+            }
+            let i = i + 1;
+        }
+
+        return false;
+        
+    }
+
+    /** Private Helper method to return the directions in which a player could win the game
+        the direction in which the player can win depands on the relation between the Array given by this method
+        and the getDyArray method such that every index in the arrays specifies one direction in the game board matrix.
+
+        Returns:
+            The Array of the directions on the x-axis
+
+    */
+    method Array getDxArray(){
+        var Array dx;
+        let dx = Array.new(4);
+        let dx[0] = 1;
+        let dx[1] = 0;
+        let dx[2] = 1;
+        let dx[3] = 1;
+        return dx;
+    }
+
+    /** Private Helper method to return the directions in which a player could win the game
+        the direction in which the player can win depands on the relation between the Array given by this method
+        and the getDxArray method such that every index in the arrays specifies one direction in the game board matrix.
+
+        Returns:
+            The Array of the directions on the y-axis
+
+    */
+    method Array getDyArray(){
+        var Array dy;
+        let dy = Array.new(4);
+        let dy[0] = 1;
+        let dy[1] = 1;
+        let dy[2] = -1;
+        let dy[3] = 0;
+        return dy;
+    }
+
+    /** Private Helper method to check the number of consecutive pieces of the same number in one direction of the matrix
+        starting from the given entry in the matrix that is given by the row and column parameters and in the given direction
+        given by the dx and dy parameters.
+
+        Parameters;
+            row - the row of the cell in the matrix to check
+            col - the column of the cell in the matrix to check
+            dx - the direction on the x axis of the matrix to check
+            dy - the direction on the y axis of the matrix to check
+
+        Returns:
+            The number of consecutive numbers in the matrix in the direction specified
+    */
+    method int getStraight(int row, int col, int dx, int dy){
+        var int counter,currentVal;
+        let counter = 0;
+        let currentVal = getValue(row,col);
+        while((row > -1 & row < size) & (col > -1 & col < size)){
+            if(~(getValue(row,col) = currentVal)){
+                return counter;
+            }
+            let counter = counter + 1;
+            let row = row + dy;
+            let col = col + dx;
+        }
+        return counter;
     }
 
     /** Returns the Lowest Row that could store a game piece in the given column.
 
         Returns:
-            the Lowest Row that could store a game piece in the given column
+            the Lowest Row that could store a game piece in the given column or -1 if the column is full
     */
     method int getLowestEmptyCell(int column){
-        return 0;
+        var int counter, data;
+        let counter = 0;
+        while(counter < size){
+            let data = getValue(counter, column);
+            if(~(data = 0)){
+                return counter - 1;
+            }
+            let counter = counter + 1;
+        }
+        return counter -1;
     }
 
     /** Disposes this Board Instance */
     method void dispose(){
+        var int curX;
+        var Array xGrid;
+
+        let curX = 0;
+        while( curX < size ) {
+            let xGrid = board[curX];
+            do xGrid.dispose();
+            let curX = curX + 1;
+        }
+        do Memory.deAlloc(this);
         return;
     }
+
+    /** Private Helper Method to get the matrix entry in the given row and column.
+
+        Parameters:
+            i - the entry row
+            j - the entry column
+
+        Returns:
+            the entry in the given row and column
+    */
+    method int getValue(int i, int j){
+        var Array Row;
+        let Row = board[i];
+        return Row[j];
+    }
+
+    /** Private Helper Method to set the matrix entry in the given row and column with the given number.
+
+        Parameters:
+            i - the entry row
+            j - the entry column
+            player - the number to set the entry to
+    
+    */
+    method void setValue(int i, int j, int player){
+        var Array Row;
+        let Row = board[i];
+        let Row[j] = player;
+        return;
+    }
+
+    /** Prints the current board field matrix on the screen.
+    */
+    method void printBoard(){
+        var int i,j;
+        var int num;
+        let i = 0;
+        while( i < size){
+            let j = 0;
+            while( j < size){
+                let num = getValue(i,j);
+                do Output.printInt(num);
+                do Output.printString(" ");
+                let j = j + 1;
+            }
+            let i = i + 1;
+            do Output.println();
+        }
+        return;
+    }   
 }

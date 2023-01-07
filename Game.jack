@@ -1,24 +1,120 @@
 class Game{
+
+    // Constants
+    field int INIT_PIECE_X, INIT_PIECE_Y, CELL_WIDTH, CELL_HEIGHT;
     
+    // Class Fields
     field Board gameBoard;
     field Array pieces;
+    field int pieceCount;
     
+    /** Consructs a Game instance
+        (Constants are defined here)
+    */
     constructor Game new(){
-      return this;
+        let gameBoard = Board.new(7);
+        let pieces = Array.new(49);
+        let pieceCount = 0;
+        let INIT_PIECE_X = 256;
+        let INIT_PIECE_Y = 40;  
+        let CELL_WIDTH = 54;
+        let CELL_HEIGHT = 27;
+        return this;
     }
 
+    /** Disposes this Game Instance */
     method void dispose() {
+      var int i;
+      var GamePiece piece;
+      let i = 0;
+      while(i < (pieceCount-1)){
+          let piece = pieces[i];
+          do piece.dispose();
+          let i = i + 1;
+      }
       do gameBoard.dispose();
-      //while{}
       do Memory.deAlloc(this);
       return;
     }
 
+    /** Runs the Four in a row game main loop 
+    */
     method void run(){
-      return;
+
+        // varibles decleration
+        var char key;
+        var boolean hasWon, turn, dropped;
+        var GamePiece piece;
+        var String winningTitle;
+        var int column, emptyCell;
+        
+        // sets the initial state of the game
+        let hasWon = false;
+        let turn = true;
+
+        // main game loop
+        while( ~hasWon & (pieceCount < 49)){
+            let piece = GamePiece.new(INIT_PIECE_X,INIT_PIECE_Y,turn);
+            let pieces[pieceCount] = piece;
+            let pieceCount = pieceCount + 1;
+            let column = 4;
+            let dropped = false;
+            while(~dropped){
+                while(key = 0){
+                    let key = Keyboard.keyPressed();
+                } 
+                if (key = 130) { // left arrow
+                    if(piece.moveLeft()){
+                        let column = column - 1;
+                    }
+                }
+                if (key = 132) { // right arrow
+                    if(piece.moveRight()) { 
+                        let column = column + 1;
+                    }
+                }
+                if (key = 133) { // down arrow
+                    let emptyCell = gameBoard.getLowestEmptyCell(column);
+                    if(~ (emptyCell = -1)){
+                        let dropped = true;
+                        do piece.drop(emptyCell * CELL_HEIGHT + 64 + 10);
+                        let hasWon = gameBoard.updateCell(emptyCell, column, turn);
+                    }
+                }
+                let key = 0;
+                do Sys.wait(100);
+            }
+            let turn = ~turn;
+        }
+
+        // winner declaration
+        do Output.moveCursor(1,26);
+        if(turn){
+            let winningTitle = "Player 2 Won!";
+        }
+        else { let winningTitle = "Player 1 Won!";}
+        do Output.printString(winningTitle);
+        return;
     }
 
+    /** Clears the screen */
+    method void eraseBoard(){
+        do Screen.clearScreen();
+        return;
+    }
+
+    /** Initializes the setting of the board on the screen */
     method void init(){
+        do Screen.setColor(true);
+        do Screen.drawLine(67,64,67,250);
+        do Screen.drawLine(67,250,445,250);
+        do Screen.drawLine(445,250,445,64);
+        do Screen.drawLine(121,64,121,250);
+        do Screen.drawLine(175,64,175,250);
+        do Screen.drawLine(229,64,229,250);
+        do Screen.drawLine(283,64,283,250);
+        do Screen.drawLine(337,64,337,250);
+        do Screen.drawLine(391,64,391,250);
         return;
     }
 }
