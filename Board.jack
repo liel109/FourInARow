@@ -48,15 +48,16 @@ class Board{
     */
     method boolean gameWon(int row, int col){
         var Array dxArray, dyArray;
-        var int i, dir1, dir2;
+        var int i, dir1, dir2, negDx, negDy;
 
         let dxArray = getDxArray();
         let dyArray = getDyArray();
         let i = 0;
-
         while(i < 4){
+            let negDx = Math.multiply((-1),dxArray[i]);
+            let negDy = Math.multiply((-1),dyArray[i]);
             let dir1 = getStraight(row,col,dxArray[i], dyArray[i]);
-            let dir2 = getStraight(row,col, -1 * dxArray[i] , -1 * dyArray[i]);
+            let dir2 = getStraight(row,col, negDx , negDy);
             if(dir1 + dir2 > 4) {
                 return true;
             }
@@ -120,7 +121,7 @@ class Board{
         var int counter,currentVal;
         let counter = 0;
         let currentVal = getValue(row,col);
-        while((row > -1 & row < size) & (col > -1 & col < size)){
+        while((~(row < 0) & (row < size)) & (~(col < 0) & (col < size))){
             if(~(getValue(row,col) = currentVal)){
                 return counter;
             }

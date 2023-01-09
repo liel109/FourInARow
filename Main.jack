@@ -9,14 +9,15 @@ class Main{
         do MainTitle.shouMainMenu();
         do Output.moveCursor(10,21);
         do Output.printString("Press ENTER to start");
+        
+            do Output.moveCursor(0,0);
         while(~(key = 128)){
             let key = Keyboard.keyPressed();
         }
         if(key = 78) { // No - don't play another game
             let newGame = false;
         }
-        let key =0;
-        do MainTitle.animateLoading();
+        let key = 0;
         // start a new game
         while(newGame){
             
