@@ -32,8 +32,7 @@ The game is played on a 7x6 grid, where players take turns dropping their colore
 ## Controls
 
 - Use the arrow keys to move the cursor left and right.
-- Press the "Enter" key to drop your disc into the selected column.
-- To exit the game, press the "Esc" key.
+- Press the Down key to drop your disc into the selected column.
 
 ## Implementation Details
 
@@ -45,7 +44,7 @@ Here's an overview of the main components of the Four in a Row game implementati
 
 - **Winning Check:** After each player's move, the program checks for a winning combination of discs to determine if the game has been won.
 
-- **User Interface:** The game provides a simple text-based user interface, allowing players to interact with the game using arrow keys and the "Enter" key.
+- **User Interface:** The game provides a simple text-based user interface, allowing players to interact with the game using arrow keys.
 
 - **Input Handling:** The program reads input from the keyboard and responds accordingly, allowing players to drop discs into the desired columns.
 
