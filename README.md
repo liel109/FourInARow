@@ -1,6 +1,6 @@
 # Four in a Row Game in Jack Programming Language
 
-![Four in a Row Screenshot](ScreenShot/GameScreenshot.png)
+![Four in a Row Screenshot](Screenshot/GameScreenshot.png)
 
 Welcome to the Four in a Row game implemented in the Jack programming language! This game is developed as part of the Nand to Tetris course's Hack computer project, where we aim to build a complete computer system from the ground up.
 
